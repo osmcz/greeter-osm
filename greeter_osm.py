@@ -15,11 +15,11 @@ import sys
 import bs4
 import requests
 
-rssurl = 'http://resultmaps.neis-one.org/newestosmcountryfeed.php?c=Slovakia'
+RSSURL = 'http://resultmaps.neis-one.org/newestosmcountryfeed.php?c={}'
 
 parser = argparse.ArgumentParser(description='send OSM welcome message to '
                                  'a user with the first changeset '
-                                 'made in Slovakia')
+                                 'made in a region')
 parser.add_argument('-d',
                     help='debug mode',
                     action='store_true',
@@ -97,6 +97,8 @@ senderpass = config.get('Auth', 'password')
 
 token = osm_auth()
 logging.debug('OSM token is %s' % token)
+
+rssurl = RSSURL.format(config.get('main', 'region'))
 
 if not options.u:
     r = requests.get(rssurl)
