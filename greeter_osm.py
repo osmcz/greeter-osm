@@ -53,19 +53,19 @@ cookies = {}
 def osm_auth():
     global cookies
     logging.debug('Authenticating..')
-    r = requests.get('https://www.openstreetmap.org/')
-    cookies = r.cookies
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    req_auth = requests.get('https://www.openstreetmap.org/')
+    cookies = req_auth.cookies
+    soup = bs4.BeautifulSoup(req_auth.text, 'html.parser')
     token = soup.find('meta', attrs={'name': 'csrf-token'})['content']
 
     data = {'username': senderlogin,
             'password': senderpass,
             'authenticity_token': token
             }
-    r = requests.post('https://www.openstreetmap.org/login',
+    req_auth = requests.post('https://www.openstreetmap.org/login',
                       data=data, cookies=cookies)
     logging.debug('OSM cookies: %s', cookies)
-    soup = bs4.BeautifulSoup(r.text, 'html.parser')
+    soup = bs4.BeautifulSoup(req_auth.text, 'html.parser')
     token = soup.find('meta', attrs={'name': 'csrf-token'})['content']
     if token:
         return token
@@ -81,9 +81,9 @@ def osm_send(token, subject, message, rcpt):
             'message[body]': message,
             'commit': 'Odoslať'
             }
-    r = requests.post('https://www.openstreetmap.org/messages',
+    req_send = requests.post('https://www.openstreetmap.org/messages',
                       data=data, cookies=cookies)
-    r.raise_for_status()
+    req_send.raise_for_status()
 
 
 config = configparser.RawConfigParser()
