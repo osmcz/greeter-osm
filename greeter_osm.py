@@ -64,7 +64,7 @@ def osm_auth():
             }
     r = requests.post('https://www.openstreetmap.org/login',
                       data=data, cookies=cookies)
-    logging.debug('OSM cookies: %s' % cookies)
+    logging.debug('OSM cookies: %s', cookies)
     soup = bs4.BeautifulSoup(r.text, 'html.parser')
     token = soup.find('meta', attrs={'name': 'csrf-token'})['content']
     if token:
@@ -96,7 +96,7 @@ senderlogin = config.get('Auth', 'username')
 senderpass = config.get('Auth', 'password')
 
 token = osm_auth()
-logging.debug('OSM token is %s' % token)
+logging.debug('OSM token is %s', token)
 
 rssurl = RSSURL.format(config.get('main', 'region'))
 
@@ -109,7 +109,7 @@ if not options.u:
     userurls = [x.get_text() for x in soup.find_all('id')]
     userurls.reverse()
     statusfile = config.get('Files', 'statusfile')
-    logging.debug('Status file: %s' % statusfile)
+    logging.debug('Status file: %s', statusfile)
 
     try:
         lastsent = open(statusfile, encoding='utf-8').read().strip()
@@ -121,7 +121,7 @@ if not options.u:
     except ValueError:
         ind = 0
 
-    logging.debug('we left off at %s' % lastsent)
+    logging.debug('we left off at %s', lastsent)
 else:
     userurls = ['xxx/%s' % options.u[0]]
     ind = -1
@@ -140,13 +140,13 @@ for user in userurls[ind+1:]:
     soup = bs4.BeautifulSoup(r.text, 'html.parser')
     changeset = soup.findAll('a')[0]['href']
 
-    logging.debug("Last changeset id: %s" % changeset)
+    logging.debug("Last changeset id: %s", changeset)
 
     r = requests.get('http://openstreetmap.org/api/0.6%s' % changeset)
     soup = bs4.BeautifulSoup(r.text, 'html.parser')
 
     tags = {k['k']: k['v'] for k in soup.findAll('tag')}
-    logging.debug('changeset tags: %s' % tags)
+    logging.debug('changeset tags: %s', tags)
 
     if not tags.get('source'):
         logging.debug('no source tag used for changeset')
@@ -163,10 +163,10 @@ for user in userurls[ind+1:]:
         message += '\n\n' + ideditormessage
 
     if not options.nosend:
-        logging.debug('sending message to user %s' % rcpt)
+        logging.debug('sending message to user %s', rcpt)
         osm_send(token, 'Privitanie', message, rcpt)
     else:
-        logging.debug('NOT sending (because you said so) the message to user %s' % rcpt)
+        logging.debug('NOT sending (because you said so) the message to user %s', rcpt)
     if not options.u:
         with open(statusfile, 'w', encoding='utf-8') as f:
             f.write(user)
