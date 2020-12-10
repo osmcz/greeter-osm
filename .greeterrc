@@ -1,0 +1,24 @@
+[Auth]
+username=Jose Riha
+password=HESLO_DO_OSM
+
+[Files]
+statusfile = ./statusgreeter
+
+[Messages]
+mainmessage = Ahoj <nick>,
+	
+	dakujeme Ti za Tvoj prvy prispevok do mapy OpenStreetMap. Dovolujeme si Ta srdecne privitat medzi komunitou nadsencov, ktori podobnymi upravami zlepsuju ci doplnuju mapu uz niekolko rokov. Ak je toto skor jednorazova zalezitost, nevadi, mozno vo svojom okoli poznas niekoho, kto trebars rad chodi do lesa, bicykluje alebo ma vasen pre mapy a tak budeme radi, ak sa so svojou skusenostou podelis. Sposobov, akym mozno prispiet je mnoho - okrem samotneho editovania to moze byt aj napriklad nahravanie gps logov, nahlasovanie chyb alebo samotna propagacia projektu.
+	
+	Ak mas chut sa cokolvek spytat alebo len sa podelit so svojimi skusenostami ci napadom na vylepsenie, radi Ta uvidime na osm_sk@googlegroups.com (https://groups.google.com/forum/#!forum/osm_sk). Mozno budes mat zaujem sa stretnut na nami organizovanej akcii alebo vybehnut s lokalnymi pouzivatelmi na malu mapovacku - je to len na Tebe.
+	
+	A nezabudni na zlate pravidlo OpenStreetMap: bez (vyslovneho) povolenia z cudzich map (Google Mapy, hiking a pod) nic nekopirujeme! :-)
+	
+	Vela stastia,%%
+	team freemap.sk%%
+	wiki.freemap.sk%%
+
+nosourcemessage=Vsimli sme si, ze si vo svojom poslednom changesete neudal(a) source tag. Aj napriek tomu, ze tento tag nie je povinny, byva dobrym zvykom ho pridavat. Na zaklade hodnoty tohto tagu mozno potom odvodit hodnovernost dat a riesit konflikty s realitou pri buducich editoch. Najdoveryhodnejsou hodnotou je spravidla survey, najmenej potom napr. Bing alebo kapor2, kedze tieto zdroje rychlo zastaravaju a zaostavaju tak za realitou.
+nocommentmessage=K changesetu byva dobrym zvykom pridavat komentar (v editore iD: Kratky popis ukladanych zmien, v JOSM: Kratky komentar k nahravanym zmenam), kedze ten umozni Tebe i inym velmi rychlo rozoznat o aky typ uprav v ramci changesetu ide.
+ideditormessage=Zda sa, ze si pouzil editor iD. Pre obcasne upravy je vyborny, no ak planujes castejsie prispievat, pripadne riesit komplikovanejsie zalezitosti, jednoznacne musime odporucit najpokrocilejsi editor napisany v Jave: JOSM (http://josm.openstreetmap.de), ktory ma ovela vacsie moznosti uprav, velke mnozstvo klavesovych skratiek, rozsirujucich pluginov a pred odoslanim zmien na server tieto este podrobuje kontrole.
+
