@@ -143,13 +143,13 @@ for user in userurls[ind+1:]:
 
     message = mainmessage.replace('%', ' ').replace('<nick>', rcpt)
 
-    r = requests.get('http://openstreetmap.org/user/%s/history' % rcpt_quoted)
+    r = requests.get('https://openstreetmap.org/user/%s/history' % rcpt_quoted)
     soup = bs4.BeautifulSoup(r.text, 'html.parser')
     changeset = soup.findAll('a')[0]['href']
 
     logging.debug("Last changeset id: %s", changeset)
 
-    r = requests.get('http://openstreetmap.org/api/0.6%s' % changeset)
+    r = requests.get('https://openstreetmap.org/api/0.6%s' % changeset)
     soup = bs4.BeautifulSoup(r.text, 'html.parser')
 
     tags = {k['k']: k['v'] for k in soup.findAll('tag')}
@@ -171,7 +171,7 @@ for user in userurls[ind+1:]:
 
     if not options.nosend:
         logging.debug('sending message to user %s', rcpt)
-        osm_send(token, 'Privitanie', message, rcpt, req_cookies)
+        osm_send(token, 'Privitanie', message, rcpt_quoted, req_cookies)
     else:
         logging.debug('NOT sending (because you said so) the message to user %s', rcpt)
     if not options.u:
