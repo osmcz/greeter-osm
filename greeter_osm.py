@@ -74,10 +74,10 @@ def osm_auth(cookies):
         raise Exception("token could not be obtained")
 
 
-def osm_send(token, subject, message, rcpt, cookies):
+def osm_send(token, subject, message, to, cookies):
     data = {'authenticity_token': token,
             'message[title]': subject,
-            'display_name': rcpt,
+            'display_name': to,
             'message[body]': message,
             'commit': 'Odeslat'
             }
