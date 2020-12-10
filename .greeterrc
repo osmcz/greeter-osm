@@ -3,7 +3,7 @@ region = Slovakia
 
 [Auth]
 username=Jose Riha
-password=HESLO_DO_OSM
+password=
 
 [Files]
 statusfile = ./statusgreeter

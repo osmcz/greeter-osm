@@ -8,6 +8,7 @@ greeter_osmsk.py 0.7
 
 import argparse
 import configparser
+import getpass
 import logging
 import os
 import sys
@@ -92,6 +93,8 @@ os.chdir(currdir)
 
 senderlogin = config.get('Auth', 'username')
 senderpass = config.get('Auth', 'password')
+if not senderpass:
+   senderpass = getpass.getpass("Password for {}:".format(senderlogin))
 
 token = osm_auth(req_cookies)
 logging.debug('OSM token is %s', token)
