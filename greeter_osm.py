@@ -7,12 +7,13 @@ greeter_osmsk.py 0.7
 """
 
 import argparse
-import bs4
 import configparser
 import logging
 import os
-import requests
 import sys
+
+import bs4
+import requests
 
 rssurl = 'http://resultmaps.neis-one.org/newestosmcountryfeed.php?c=Slovakia'
 
