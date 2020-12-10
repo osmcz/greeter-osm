@@ -104,7 +104,7 @@ if not senderpass:
 token = osm_auth(req_cookies)
 logging.debug('OSM token is %s', token)
 
-rssurl = RSSURL.format(config.get('main', 'region'))
+rssurl = RSSURL.format(urllib.parse.quote(config.get('main', 'region')))
 
 if not options.u:
     r = requests.get(rssurl)
