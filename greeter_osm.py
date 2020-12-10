@@ -99,7 +99,7 @@ if not senderlogin:
 
 senderpass = config.get('Auth', 'password')
 if not senderpass:
-    senderpass = getpass.getpass("Password: ".format(senderlogin))
+    senderpass = getpass.getpass("Password: ")
 
 token = osm_auth(req_cookies)
 logging.debug('OSM token is %s', token)
