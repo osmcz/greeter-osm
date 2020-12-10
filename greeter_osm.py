@@ -56,19 +56,19 @@ def osm_auth():
     req_auth = requests.get('https://www.openstreetmap.org/')
     cookies = req_auth.cookies
     soup_auth = bs4.BeautifulSoup(req_auth.text, 'html.parser')
-    token = soup_auth.find('meta', attrs={'name': 'csrf-token'})['content']
+    token_auth = soup_auth.find('meta', attrs={'name': 'csrf-token'})['content']
 
     data = {'username': senderlogin,
             'password': senderpass,
-            'authenticity_token': token
+            'authenticity_token': token_auth,
             }
     req_auth = requests.post('https://www.openstreetmap.org/login',
                       data=data, cookies=cookies)
     logging.debug('OSM cookies: %s', cookies)
     soup_auth = bs4.BeautifulSoup(req_auth.text, 'html.parser')
-    token = soup_auth.find('meta', attrs={'name': 'csrf-token'})['content']
-    if token:
-        return token
+    token_auth = soup_auth.find('meta', attrs={'name': 'csrf-token'})['content']
+    if token_auth:
+        return token_auth
     else:
         raise Exception("token could not be obtained")
 
