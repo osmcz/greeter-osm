@@ -2,7 +2,7 @@
 region = Czech%20Republic
 
 [Auth]
-username=
+username=Miroslav Suchý
 password=
 
 [Files]
@@ -21,7 +21,8 @@ mainmessage = Ahoj <nick>,
 	team freemap.sk%%
 	wiki.freemap.sk%%
 
-nosourcemessage=Všimli jsme si, že ve tvém posledním changesetu jsi nepoužila(a) source tag. Ačkoliv je nepovinný, bývá dobrým zvykem ho použít. Na základě tohot tagu je možné odvodit hodnověrnost dat a řešit konflikty s realitou při budoucích editacích. Více informací najdeš na: https://wiki.openstreetmap.org/wiki/Cs:Key:source
+nosourcemessage=zdar
+#nosourcemessage=Všimli jsme si, že ve tvém posledním changesetu jsi nepoužila(a) source tag. Ačkoliv je nepovinný, bývá dobrým zvykem ho použít. Na základě tohot tagu je možné odvodit hodnověrnost dat a řešit konflikty s realitou při budoucích editacích. Více informací najdeš na: https://wiki.openstreetmap.org/wiki/Cs:Key:source
 nocommentmessage=K changesetu byva dobrym zvykom pridavat komentar (v editore iD: Kratky popis ukladanych zmien, v JOSM: Kratky komentar k nahravanym zmenam), kedze ten umozni Tebe i inym velmi rychlo rozoznat o aky typ uprav v ramci changesetu ide.
 ideditormessage=Zda sa, ze si pouzil editor iD. Pre obcasne upravy je vyborny, no ak planujes castejsie prispievat, pripadne riesit komplikovanejsie zalezitosti, jednoznacne musime odporucit najpokrocilejsi editor napisany v Jave: JOSM (http://josm.openstreetmap.de), ktory ma ovela vacsie moznosti uprav, velke mnozstvo klavesovych skratiek, rozsirujucich pluginov a pred odoslanim zmien na server tieto este podrobuje kontrole.
 

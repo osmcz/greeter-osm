@@ -12,6 +12,7 @@ import getpass
 import logging
 import os
 import sys
+import urllib.parse
 
 import bs4
 import requests
@@ -78,8 +79,9 @@ def osm_send(token, subject, message, rcpt, cookies):
             'message[title]': subject,
             'display_name': rcpt,
             'message[body]': message,
-            'commit': 'Odoslať'
+            'commit': 'Odeslat'
             }
+    logging.debug('Sending %s', data)
     req_send = requests.post('https://www.openstreetmap.org/messages',
                       data=data, cookies=cookies)
     req_send.raise_for_status()
@@ -137,10 +139,11 @@ ideditormessage = config.get('Messages', 'ideditormessage')
 
 for user in userurls[ind+1:]:
     rcpt = user.split('/')[-1]
+    rcpt_quoted = urllib.parse.quote(rcpt)
 
     message = mainmessage.replace('%', ' ').replace('<nick>', rcpt)
 
-    r = requests.get('http://openstreetmap.org/user/%s/history' % rcpt)
+    r = requests.get('http://openstreetmap.org/user/%s/history' % rcpt_quoted)
     soup = bs4.BeautifulSoup(r.text, 'html.parser')
     changeset = soup.findAll('a')[0]['href']
 
