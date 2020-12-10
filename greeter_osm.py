@@ -95,11 +95,11 @@ os.chdir(currdir)
 
 senderlogin = config.get('Auth', 'username')
 if not senderlogin:
-   senderlogin = input("Username: ")
+    senderlogin = input("Username: ")
 
 senderpass = config.get('Auth', 'password')
 if not senderpass:
-   senderpass = getpass.getpass("Password: ".format(senderlogin))
+    senderpass = getpass.getpass("Password: ".format(senderlogin))
 
 token = osm_auth(req_cookies)
 logging.debug('OSM token is %s', token)
