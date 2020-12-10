@@ -92,6 +92,9 @@ config.read(os.path.join(currdir, '.greeterrc'))
 os.chdir(currdir)
 
 senderlogin = config.get('Auth', 'username')
+if not senderlogin:
+   senderlogin = input("Username: ")
+
 senderpass = config.get('Auth', 'password')
 if not senderpass:
    senderpass = getpass.getpass("Password for {}:".format(senderlogin))
