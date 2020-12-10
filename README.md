@@ -1,1 +1,5 @@
 # greeter-osm
+
+# License
+
+WTFPL
