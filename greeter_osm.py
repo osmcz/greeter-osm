@@ -47,11 +47,10 @@ elif options.debug:
     logging.basicConfig(level=logging.DEBUG)
     logging.getLogger("requests").setLevel(logging.INFO)
 
-cookies = {}
+req_cookies = {}
 
 
-def osm_auth():
-    global cookies
+def osm_auth(cookies):
     logging.debug('Authenticating..')
     req_auth = requests.get('https://www.openstreetmap.org/')
     cookies = req_auth.cookies
@@ -73,8 +72,7 @@ def osm_auth():
         raise Exception("token could not be obtained")
 
 
-def osm_send(token, subject, message, rcpt):
-    global cookies
+def osm_send(token, subject, message, rcpt, cookies):
     data = {'authenticity_token': token,
             'message[title]': subject,
             'display_name': rcpt,
@@ -95,7 +93,7 @@ os.chdir(currdir)
 senderlogin = config.get('Auth', 'username')
 senderpass = config.get('Auth', 'password')
 
-token = osm_auth()
+token = osm_auth(req_cookies)
 logging.debug('OSM token is %s', token)
 
 rssurl = RSSURL.format(config.get('main', 'region'))
@@ -164,7 +162,7 @@ for user in userurls[ind+1:]:
 
     if not options.nosend:
         logging.debug('sending message to user %s', rcpt)
-        osm_send(token, 'Privitanie', message, rcpt)
+        osm_send(token, 'Privitanie', message, rcpt, req_cookies)
     else:
         logging.debug('NOT sending (because you said so) the message to user %s', rcpt)
     if not options.u:
