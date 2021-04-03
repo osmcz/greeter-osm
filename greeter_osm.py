@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-greeter_osmsk.py 0.7
+based on greeter_osmsk.py 0.7
  skript, ktory sleduje newusers rss feed a ked objavi
  novacika editujuceho slovensko, posle mu uvitaciu spravu
 """
@@ -10,14 +10,17 @@ import argparse
 import configparser
 import getpass
 import logging
+import json
 import os
 import sys
 import urllib.parse
 
 import bs4
+import mechanize
 import requests
 
-RSSURL = 'http://resultmaps.neis-one.org/newestosmcountryfeed.php?c={}'
+RSSURL = 'https://resultmaps.neis-one.org/newestosmcountryfeed.php?c={}'
+CONFIG = '.greeterrc'
 
 parser = argparse.ArgumentParser(description='send OSM welcome message to '
                                  'a user with the first changeset '
@@ -52,46 +55,35 @@ elif options.debug:
 req_cookies = {}
 
 
-def osm_auth(cookies):
+def osm_auth(username, password):
+    """ Login to OSM.org and returns megchanize.Browser. """
     logging.debug('Authenticating..')
-    req_auth = requests.get('https://www.openstreetmap.org/')
-    cookies = req_auth.cookies
-    soup_auth = bs4.BeautifulSoup(req_auth.text, 'html.parser')
-    token_auth = soup_auth.find('meta', attrs={'name': 'csrf-token'})['content']
+    br = mechanize.Browser()
+    br.set_handle_robots(False)
+    br.addheaders = [('User-agent', 'https://github.com/osmcz/greeter-osm')]
 
-    data = {'username': senderlogin,
-            'password': senderpass,
-            'authenticity_token': token_auth,
-            }
-    req_auth = requests.post('https://www.openstreetmap.org/login',
-                      data=data, cookies=cookies)
-    logging.debug('OSM cookies: %s', cookies)
-    soup_auth = bs4.BeautifulSoup(req_auth.text, 'html.parser')
-    token_auth = soup_auth.find('meta', attrs={'name': 'csrf-token'})['content']
-    if token_auth:
-        return token_auth
-    else:
-        raise Exception("token could not be obtained")
+    br.open("https://www.openstreetmap.org/login/")
+    br.select_form(id="login_form")
+    br["username"] = username
+    br["password"] = password
+    br.submit()
+
+    return br
 
 
-def osm_send(token, subject, message, to, cookies):
-    data = {'authenticity_token': token,
-            'message[title]': subject,
-            'display_name': to,
-            'message[body]': message,
-            'commit': 'Odeslat'
-            }
-    logging.debug('Sending %s', data)
-    req_send = requests.post('https://www.openstreetmap.org/messages',
-                      data=data, cookies=cookies)
-    req_send.raise_for_status()
+def osm_send(browser, subject, message, to):
+    """ Sends message using mechanize.Browser to user in OSM """
+    logging.debug('Sending %s : %s \n to %s', subject, message, to)
+    browser.open("https://www.openstreetmap.org/message/new/{}".format(to))
+    browser.select_form(id="new_message")
+    browser["message[title]"] = subject
+    browser["message[body]"] = message
+    browser.submit()
 
 
 config = configparser.RawConfigParser()
-currdir = os.path.dirname(sys.argv[0])
-config.read(os.path.join(currdir, '.greeterrc'))
-
-os.chdir(currdir)
+currdir = os.getcwd()
+config.read(os.path.join(currdir, CONFIG))
 
 senderlogin = config.get('Auth', 'username')
 if not senderlogin:
@@ -101,9 +93,7 @@ senderpass = config.get('Auth', 'password')
 if not senderpass:
     senderpass = getpass.getpass("Password: ")
 
-token = osm_auth(req_cookies)
-logging.debug('OSM token is %s', token)
-
+browser = osm_auth(senderlogin, senderpass)
 rssurl = RSSURL.format(urllib.parse.quote(config.get('main', 'region')))
 
 if not options.u:
@@ -169,9 +159,9 @@ for user in userurls[ind+1:]:
         logging.debug('iD editor detected')
         message += '\n\n' + ideditormessage
 
+    logging.debug('sending message to user %s', rcpt)
     if not options.nosend:
-        logging.debug('sending message to user %s', rcpt)
-        osm_send(token, 'Privitanie', message, rcpt_quoted, req_cookies)
+        osm_send(browser, 'Přivítání', message, rcpt_quoted)
     else:
         logging.debug('NOT sending (because you said so) the message to user %s', rcpt)
     if not options.u:
