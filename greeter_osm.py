@@ -20,7 +20,7 @@ import mechanize
 import requests
 
 RSSURL = 'https://resultmaps.neis-one.org/newestosmcountryfeed.php?c={}'
-CONFIG = '.greeterrc'
+CONFIG = 'greeter-osm.conf'
 
 parser = argparse.ArgumentParser(description='send OSM welcome message to '
                                  'a user with the first changeset '
