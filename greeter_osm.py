@@ -122,6 +122,7 @@ else:
     userurls = ['xxx/%s' % options.u[0]]
     ind = -1
 
+subject = config.get('Messages', 'subject')
 mainmessage = config.get('Messages', 'mainmessage')
 nosourcemessage = config.get('Messages', 'nosourcemessage')
 nocommentmessage = config.get('Messages', 'nocommentmessage')
@@ -161,7 +162,7 @@ for user in userurls[ind+1:]:
 
     logging.debug('sending message to user %s', rcpt)
     if not options.nosend:
-        osm_send(browser, 'Přivítání', message, rcpt_quoted)
+        osm_send(browser, subject, message, rcpt_quoted)
     else:
         logging.debug('NOT sending (because you said so) the message to user %s', rcpt)
     if not options.u:
