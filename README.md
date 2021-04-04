@@ -1,6 +1,6 @@
 # greeter-osm
 
-This script utilize [newesttoosm](https://neis-one.org/2012/04/where-are-the-new-openstreetmap-contributors/) feed and sends welcome message to a user.
+This script utilizes [newesttoosm](https://neis-one.org/2012/04/where-are-the-new-openstreetmap-contributors/) feed and sends a welcome message to a user.
 
 The status is stored in `statusgreeter` file, therefore it is safe to call it daily. E.g., in cron.
 ```
