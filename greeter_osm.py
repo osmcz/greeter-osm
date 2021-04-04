@@ -10,14 +10,15 @@ import argparse
 import configparser
 import getpass
 import logging
-import json
 import os
-import sys
 import urllib.parse
 
 import bs4
 import mechanize
 import requests
+
+#pylint: disable=no-member,unsupported-assignment-operation
+#pylint: disable=invalid-name
 
 RSSURL = 'https://resultmaps.neis-one.org/newestosmcountryfeed.php?c={}'
 CONFIG = 'greeter-osm.conf'
