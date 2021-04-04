@@ -20,4 +20,4 @@ The configuration is stored in `greeter-osm.conf`.
 
 # License
 
-WTFPL
+[WTFPL](LICENSE)
