@@ -84,7 +84,7 @@ def osm_send(browser, subject, message, to):
 
 config = configparser.RawConfigParser()
 currdir = os.getcwd()
-config.read(os.path.join(currdir, CONFIG))
+config.read(os.path.join(currdir, CONFIG), encoding="utf8")
 
 senderlogin = config.get('Auth', 'username')
 if not senderlogin:
