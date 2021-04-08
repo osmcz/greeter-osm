@@ -26,6 +26,11 @@ CONFIG = 'greeter-osm.conf'
 parser = argparse.ArgumentParser(description='send OSM welcome message to '
                                  'a user with the first changeset '
                                  'made in a region')
+parser.add_argument('-c', '--config',
+                    metavar='config',
+                    help='config file',
+                    nargs=1,
+                    dest='config')
 parser.add_argument('-d',
                     help='debug mode',
                     action='store_true',
@@ -52,6 +57,9 @@ if options.l:
 elif options.debug:
     logging.basicConfig(level=logging.DEBUG)
     logging.getLogger("requests").setLevel(logging.INFO)
+
+if options.config:
+    CONFIG = options.config
 
 req_cookies = {}
 
