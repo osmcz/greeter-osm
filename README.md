@@ -18,6 +18,10 @@ optional arguments:
 
 The configuration is stored in `greeter-osm.conf`.
 
+## Ansible
+
+You can install greeter-osm using this Ansible role: [https://github.com/osmcz/infra-ansible/tree/main/roles/greeter-osm](https://github.com/osmcz/infra-ansible/tree/main/roles/greeter-osm)
+
 # License
 
 [WTFPL](LICENSE)
