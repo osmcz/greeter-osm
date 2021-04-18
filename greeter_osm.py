@@ -61,8 +61,6 @@ elif options.debug:
 if options.config:
     CONFIG = options.config
 
-req_cookies = {}
-
 
 def osm_auth(username, password):
     """ Login to OSM.org and returns megchanize.Browser. """
@@ -91,8 +89,7 @@ def osm_send(browser, subject, message, to):
 
 
 config = configparser.RawConfigParser()
-currdir = os.getcwd()
-config.read(os.path.join(currdir, CONFIG), encoding="utf8")
+config.read(CONFIG, encoding="utf8")
 
 senderlogin = config.get('Auth', 'username')
 if not senderlogin:
