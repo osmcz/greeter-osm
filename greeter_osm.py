@@ -31,28 +31,30 @@ parser.add_argument('-c', '--config',
                     help='config file',
                     nargs=1,
                     dest='config')
-parser.add_argument('-d',
+parser.add_argument('-d', '--debug',
                     help='debug mode',
                     action='store_true',
                     dest='debug')
-parser.add_argument('-l',
+parser.add_argument('-l', '--logfile',
                     metavar='logfile',
                     help='log to file (implies -d)',
                     nargs=1,
+                    dest='logfile',
                     type=str)
-parser.add_argument('-n',
+parser.add_argument('-n', '--no-send',
                     help='do NOT send the actual message',
                     action='store_true',
                     dest='nosend')
-parser.add_argument('-u',
+parser.add_argument('-u', '--user',
                     metavar='user',
                     help='send message to USER',
                     nargs=1,
+                    dest='user',
                     type=str)
 options = parser.parse_args()
 
-if options.l:
-    logging.basicConfig(level=logging.DEBUG, filename=options.l[0])
+if options.logfile:
+    logging.basicConfig(level=logging.DEBUG, filename=options.logfile[0])
     logging.getLogger("requests").setLevel(logging.INFO)
 elif options.debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -102,7 +104,7 @@ if not senderpass:
 browser = osm_auth(senderlogin, senderpass)
 rssurl = RSSURL.format(urllib.parse.quote(config.get('main', 'region')))
 
-if not options.u:
+if not options.user:
     r = requests.get(rssurl)
     r.raise_for_status()
     if r.status_code != 200:
@@ -125,7 +127,7 @@ if not options.u:
 
     logging.debug('we left off at %s', lastsent)
 else:
-    userurls = ['xxx/%s' % options.u[0]]
+    userurls = ['xxx/%s' % options.user[0]]
     ind = -1
 
 subject = config.get('Messages', 'subject')
@@ -171,6 +173,6 @@ for user in userurls[ind+1:]:
         osm_send(browser, subject, message, rcpt_quoted)
     else:
         logging.debug('NOT sending (because you said so) the message to user %s', rcpt)
-    if not options.u:
+    if not options.user:
         with open(statusfile, 'w', encoding='utf-8') as f:
             f.write(user)
